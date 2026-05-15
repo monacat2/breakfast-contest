@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ギコっぽいぽい 第1回 あなたの優雅な朝食 写真コンテスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Noto+Serif+JP:wght@200;300;400;500;600&family=Shippori+Mincho:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0c0b09;
+    --bg-card: #161412;
+    --bg-warm: #1a1816;
+    --gold-dim: #8a7d6a;
+    --gold-mid: #b5a48c;
+    --gold-bright: #d4c4a8;
+    --cream: #e8e0d4;
+    --cream-soft: #c8bfb0;
+    --shadow-deep: rgba(0,0,0,0.6);
+    --polaroid-bg: #f5f0e8;
+    --polaroid-shadow: rgba(0,0,0,0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--cream);
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-conic-gradient(rgba(255,255,255,0.006) 0% 25%, transparent 0% 50%) 0 0 / 3px 3px;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, transparent 30%, var(--bg-deep) 75%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .photo-collage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .polaroid {
+    position: absolute;
+    background: var(--polaroid-bg);
+    padding: 8px 8px 32px 8px;
+    box-shadow: 0 8px 30px var(--polaroid-shadow), 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    cursor: default;
+    z-index: 1;
+  }
+
+  .polaroid:hover {
+    transform: scale(1.08) rotate(0deg) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  .polaroid img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    filter: saturate(0.85) contrast(1.05);
+  }
+
+  .polaroid .caption {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    color: #8a8070;
+    text-align: center;
+    margin-top: 6px;
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  .p1  { width: 200px; top: 5%;   left: 3%;   transform: rotate(-8deg);  animation: floatA 12s ease-in-out infinite; }
+  .p2  { width: 170px; top: 8%;   left: 25%;  transform: rotate(5deg);   animation: floatB 14s ease-in-out infinite; }
+  .p3  { width: 220px; top: 2%;   right: 20%; transform: rotate(-3deg);  animation: floatC 11s ease-in-out infinite; }
+  .p4  { width: 160px; top: 12%;  right: 3%;  transform: rotate(10deg);  animation: floatA 13s ease-in-out infinite; }
+  .p5  { width: 190px; bottom: 15%; left: 5%;  transform: rotate(6deg);   animation: floatB 12s ease-in-out infinite; }
+  .p6  { width: 180px; bottom: 8%;  left: 28%; transform: rotate(-7deg);  animation: floatC 15s ease-in-out infinite; }
+  .p7  { width: 210px; bottom: 5%;  right: 18%;transform: rotate(4deg);   animation: floatA 14s ease-in-out infinite; }
+  .p8  { width: 175px; bottom: 12%; right: 2%; transform: rotate(-9deg);  animation: floatB 11s ease-in-out infinite; }
+  .p9  { width: 155px; top: 40%;  left: -2%;  transform: rotate(12deg);  animation: floatC 13s ease-in-out infinite; }
+  .p10 { width: 165px; top: 35%;  right: -1%; transform: rotate(-6deg);  animation: floatA 12s ease-in-out infinite; }
+
+  @keyframes floatA {
+    0%, 100% { translate: 0 0; }
+    33% { translate: 6px -10px; }
+    66% { translate: -4px 8px; }
+  }
+  @keyframes floatB {
+    0%, 100% { translate: 0 0; }
+    33% { translate: -8px 6px; }
+    66% { translate: 5px -7px; }
+  }
+  @keyframes floatC {
+    0%, 100% { translate: 0 0; }
+    33% { translate: 4px 9px; }
+    66% { translate: -6px -5px; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 720px;
+    background: radial-gradient(ellipse, rgba(12,11,9,0.92) 0%, rgba(12,11,9,0.8) 50%, transparent 75%);
+    padding: 4rem 3rem;
+    border-radius: 50%;
+  }
+
+  .event-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1.2rem;
+    animation: fadeInDown 1s ease 0.2s both;
+  }
+
+  .event-vol {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    color: var(--gold-mid);
+    margin-bottom: 0.8rem;
+    animation: fadeInDown 1s ease 0.4s both;
+  }
+
+  .event-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    animation: fadeInDown 1s ease 0.6s both;
+  }
+
+  .event-title-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    margin-bottom: 2rem;
+    animation: fadeInDown 1s ease 0.7s both;
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    margin: 0 auto 1.5rem;
+    animation: expandLine 1.2s ease 0.8s both;
+  }
+
+  .event-host {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    color: var(--gold-dim);
+    animation: fadeInDown 1s ease 0.9s both;
+  }
+
+  .event-host span {
+    color: var(--gold-mid);
+    font-weight: 500;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    text-align: center;
+    animation: fadeInDown 1s ease 1.2s both;
+  }
+
+  .scroll-hint p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, var(--gold-dim), transparent);
+    margin: 0 auto;
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; height: 30px; }
+    50% { opacity: 0.8; height: 40px; }
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1.2rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-play-state: paused;
+  }
+
+  .section-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.15s forwards;
+    animation-play-state: paused;
+  }
+
+  .section.visible .section-label,
+  .section.visible .section-title,
+  .section.visible .content-block,
+  .section.visible .timeline-item,
+  .section.visible .form-area,
+  .section.visible .cta-area {
+    animation-play-state: running;
+  }
+
+  .content-block {
+    background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.005));
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 3px;
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.3s forwards;
+    animation-play-state: paused;
+  }
+
+  .content-block p {
+    font-size: 1.05rem;
+    line-height: 2.2;
+    color: var(--cream-soft);
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+
+  .content-block p + p { margin-top: 1rem; }
+
+  .highlight {
+    color: var(--gold-bright);
+    font-weight: 400;
+  }
+
+  /* ===== TIMELINE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 1.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards;
+    animation-play-state: paused;
+  }
+
+  .timeline-item:nth-child(1) { animation-delay: 0.3s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.5s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.7s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.9s; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.6rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-dim);
+    border: 2px solid var(--bg-deep);
+    box-shadow: 0 0 0 1px var(--gold-dim);
+  }
+
+  .timeline-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    color: var(--gold-mid);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+  }
+
+  .timeline-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--cream-soft);
+    font-weight: 300;
+  }
+
+  .timeline-note {
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    margin-top: 0.3rem;
+    font-style: italic;
+  }
+
+  /* ===== RULES ===== */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+
+  .rule-card {
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 3px;
+    padding: 1.8rem;
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+
+  .rule-card:hover { border-color: rgba(180,164,140,0.2); }
+
+  .rule-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--gold-dim);
+    margin-bottom: 0.6rem;
+  }
+
+  .rule-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--cream-soft);
+    font-weight: 300;
+  }
+
+  /* ===== FORM ===== */
+  .form-area {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.3s forwards;
+    animation-play-state: paused;
+  }
+
+  .form-container {
+    background: linear-gradient(145deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 2.5rem;
+  }
+
+  .form-group { margin-bottom: 2rem; }
+
+  .form-group label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-mid);
+    margin-bottom: 0.7rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    color: var(--cream);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1rem;
+    padding: 0.9rem 1.1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--gold-dim); }
+
+  .form-group textarea {
+    height: 120px;
+    resize: vertical;
+    line-height: 1.9;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(200,191,176,0.3);
+    font-size: 0.95rem;
+  }
+
+  .file-upload {
+    width: 100%;
+    padding: 2.5rem;
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+
+  .file-upload:hover {
+    border-color: var(--gold-dim);
+    background: rgba(255,255,255,0.015);
+  }
+
+  .file-upload-icon { font-size: 1.8rem; margin-bottom: 0.6rem; opacity: 0.5; }
+
+  .file-upload-text {
+    font-size: 0.95rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .file-upload-hint {
+    font-size: 0.8rem;
+    color: rgba(138,125,106,0.5);
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  .image-preview {
+    margin-top: 1rem;
+    text-align: center;
+    display: none;
+  }
+
+  .image-preview img {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.08);
+    object-fit: contain;
+  }
+
+  .image-preview .preview-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, rgba(180,164,140,0.15), rgba(180,164,140,0.05));
+    border: 1px solid rgba(180,164,140,0.25);
+    border-radius: 2px;
+    color: var(--gold-bright);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: linear-gradient(135deg, rgba(180,164,140,0.25), rgba(180,164,140,0.1));
+    border-color: rgba(180,164,140,0.45);
+    box-shadow: 0 4px 20px rgba(180,164,140,0.1);
+  }
+
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .form-success .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .form-success .success-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .form-success .success-text {
+    font-size: 1rem;
+    color: var(--cream-soft);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .form-success .submit-another {
+    margin-top: 1.5rem;
+    display: inline-block;
+    padding: 0.7rem 2rem;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 2px;
+    color: var(--gold-mid);
+    font-family: 'Shippori Mincho', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .form-success .submit-another:hover {
+    border-color: rgba(180,164,140,0.35);
+    color: var(--gold-bright);
+  }
+
+  .form-error {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(200,100,100,0.3);
+    border-radius: 3px;
+    background: rgba(200,100,100,0.05);
+    color: #d4a0a0;
+    font-size: 0.9rem;
+  }
+
+  /* ===== CTA ===== */
+  .cta-area {
+    text-align: center;
+    padding: 3rem 0;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease 0.3s forwards;
+    animation-play-state: paused;
+  }
+
+  .cta-question {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  .cta-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--gold-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.03);
+  }
+
+  footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: rgba(138,125,106,0.5);
+    text-transform: uppercase;
+  }
+
+  footer p + p { margin-top: 0.3rem; }
+
+  .section-divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(138,125,106,0.3), transparent);
+    margin: 0 auto;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes expandLine {
+    from { width: 0; opacity: 0; }
+    to { width: 60px; opacity: 1; }
+  }
+
+  @media (max-width: 768px) {
+    .polaroid { display: none; }
+    .polaroid.p1, .polaroid.p2, .polaroid.p3, .polaroid.p4 { display: block; }
+    .p1 { width: 130px; top: 2%; left: -3%; }
+    .p2 { width: 120px; top: 5%; right: -2%; left: auto; }
+    .p3 { width: 140px; bottom: 8%; left: -2%; top: auto; }
+    .p4 { width: 125px; bottom: 5%; right: -1%; top: auto; left: auto; }
+    .hero-content { padding: 3rem 1.5rem; }
+    .content-block { padding: 1.8rem; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .form-container { padding: 1.5rem; }
+    .section { padding: 3.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="photo-collage">
+    <div class="polaroid p1">
+      <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400&q=80" alt="breakfast">
+      <div class="caption">someone's morning</div>
+    </div>
+    <div class="polaroid p2">
+      <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&q=80" alt="breakfast">
+      <div class="caption">a quiet table</div>
+    </div>
+    <div class="polaroid p3">
+      <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&q=80" alt="breakfast">
+      <div class="caption">toast & light</div>
+    </div>
+    <div class="polaroid p4">
+      <img src="https://images.unsplash.com/photo-1495214783159-3503fd1b572d?w=400&q=80" alt="breakfast">
+      <div class="caption">the first cup</div>
+    </div>
+    <div class="polaroid p5">
+      <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=400&q=80" alt="breakfast">
+      <div class="caption">petit déjeuner</div>
+    </div>
+    <div class="polaroid p6">
+      <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&q=80" alt="breakfast">
+      <div class="caption">sunday ritual</div>
+    </div>
+    <div class="polaroid p7">
+      <img src="https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=400&q=80" alt="breakfast">
+      <div class="caption">golden morning</div>
+    </div>
+    <div class="polaroid p8">
+      <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=400&q=80" alt="breakfast">
+      <div class="caption">simple grace</div>
+    </div>
+    <div class="polaroid p9">
+      <img src="https://images.unsplash.com/photo-1493770348161-369560ae357d?w=400&q=80" alt="breakfast">
+      <div class="caption">morning palette</div>
+    </div>
+    <div class="polaroid p10">
+      <img src="https://images.unsplash.com/photo-1517433367423-f7e136cbfce0?w=400&q=80" alt="breakfast">
+      <div class="caption">café au lait</div>
+    </div>
+  </div>
+
+  <div class="hero-vignette"></div>
+
+  <div class="hero-content">
+    <p class="event-label">ギコっぽいぽい presents</p>
+    <p class="event-vol">— Exhibition Vol.01 —</p>
+    <h1 class="event-title">あなたの優雅な朝食</h1>
+    <p class="event-title-en">Your Elegant Breakfast</p>
+    <div class="divider-line"></div>
+    <p class="event-host">Curated by <span>ポエマーM</span></p>
+  </div>
+
+  <div class="scroll-hint">
+    <p>Scroll</p>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<div class="section-divider"></div>
+<section class="section" id="about">
+  <p class="section-label">About</p>
+  <h2 class="section-title">この企画について</h2>
+  <div class="content-block">
+    <p>あなたの朝は、どんな景色から始まりますか。</p>
+    <p>焼きたてのトースト。湯気の立つコーヒー。あるいは、昨日の残り物。<br>どんな朝食にも、その人だけの物語がある。</p>
+    <p>この写真コンテストでは、あなたが思う<span class="highlight">「優雅な朝食」</span>を一枚の写真に収めて投稿してください。<br>添えられたコメントから滲み出る個性と美意識を、<br>美しいギャラリーに並べて展示します。</p>
+    <p>投票を経て、結果発表は<span class="highlight">5月29日（木）21:00</span>の配信にて。<br>誰の朝食が最も「優雅」と認められるのか——<br>その答えは、配信でのみ明かされます。</p>
+  </div>
+</section>
+
+<!-- ===== SCHEDULE ===== -->
+<div class="section-divider"></div>
+<section class="section" id="schedule">
+  <p class="section-label">Schedule</p>
+  <h2 class="section-title">スケジュール</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <p class="timeline-date">Now — May 22, 21:00</p>
+      <p class="timeline-text">作品投稿期間</p>
+      <p class="timeline-note">下記フォームより、写真・ペンネーム・コメントを送付してください</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">May 22 — May 28</p>
+      <p class="timeline-text">ギャラリー公開・投票期間</p>
+      <p class="timeline-note">投稿された作品が美しいアルバムとして公開されます。いいねで投票を</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">May 28, 20:00</p>
+      <p class="timeline-text">投票締切</p>
+      <p class="timeline-note">配信1時間前にすべての投票が確定します</p>
+    </div>
+    <div class="timeline-item">
+      <p class="timeline-date">May 29, 21:00</p>
+      <p class="timeline-text">結果発表 — 配信にて</p>
+      <p class="timeline-note">ランキングは配信でのみ公開。見届けたければ、そこに来るしかない</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RULES ===== -->
+<div class="section-divider"></div>
+<section class="section" id="rules">
+  <p class="section-label">Rules</p>
+  <h2 class="section-title">参加ルール</h2>
+  <div class="content-block" style="padding: 2rem;">
+    <div class="rules-grid">
+      <div class="rule-card">
+        <p class="rule-number">01</p>
+        <p class="rule-text">テーマは<br>「あなたの優雅な朝食」<br>自撮り・ネット画像・AI生成 可</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-number">02</p>
+        <p class="rule-text">ペンネームと<br>コメント（写真の理由）は<br>必須</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-number">03</p>
+        <p class="rule-text">複数投稿OK<br>何枚でも出品できます</p>
+      </div>
+      <div class="rule-card">
+        <p class="rule-number">04</p>
+        <p class="rule-text">公序良俗に反する画像は<br>主催者の判断で<br>掲載しない場合があります</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUBMIT ===== -->
+<div class="section-divider"></div>
+<section class="section" id="submit">
+  <p class="section-label">Submit Your Work</p>
+  <h2 class="section-title">作品を投稿する</h2>
+  <div class="form-area">
+    <div class="form-container">
+      <div class="form-error" id="formError"></div>
+
+      <form id="contestForm" action="https://formspree.io/f/xwvygerp" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="penname">Pen Name — ペンネーム</label>
+          <input type="text" id="penname" name="penname" placeholder="あなたの名前、あるいは偽名" required>
+        </div>
+        <div class="form-group">
+          <label>Photo — 写真</label>
+          <div class="file-upload" id="fileUploadArea">
+            <div class="file-upload-icon">📷</div>
+            <p class="file-upload-text">クリックして画像を選択、またはドラッグ＆ドロップ</p>
+            <p class="file-upload-hint">JPG / PNG / WEBP — 10MBまで</p>
+          </div>
+          <input type="file" id="fileInput" name="photo" accept="image/*" style="display:none" required>
+          <div class="image-preview" id="imagePreview">
+            <img id="previewImg" src="" alt="preview">
+            <p class="preview-label">Preview</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="comment">Comment — この一枚について</label>
+          <textarea id="comment" name="comment" placeholder="なぜこれが「あなたの優雅な朝食」なのか、教えてください" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="submitBtn">投稿する — Submit</button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">✨</div>
+        <p class="success-title">投稿を受け付けました</p>
+        <p class="success-text">あなたの「優雅な朝食」は、主催者の確認後にギャラリーに掲載されます。<br>結果発表は 5月29日 21:00 の配信にて。</p>
+        <button class="submit-another" id="submitAnother">もう一枚投稿する</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<div class="section-divider"></div>
+<section class="section">
+  <div class="cta-area">
+    <p class="cta-question">あなたの朝は、優雅ですか？</p>
+    <p class="cta-sub">Prove it.</p>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>ギコっぽいぽい 第1回 あなたの優雅な朝食 写真コンテスト</p>
+  <p>Organized by ポエマーM — 2026</p>
+</footer>
+
+<script>
+// Section animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+// File upload
+const fileInput = document.getElementById('fileInput');
+const fileUploadArea = document.getElementById('fileUploadArea');
+const imagePreview = document.getElementById('imagePreview');
+const previewImg = document.getElementById('previewImg');
+
+fileUploadArea.addEventListener('click', () => fileInput.click());
+
+fileInput.addEventListener('change', function() {
+  if (this.files && this.files[0]) {
+    const file = this.files[0];
+    if (file.size > 10 * 1024 * 1024) {
+      showError('ファイルサイズは10MB以下にしてください。');
+      this.value = '';
+      return;
+    }
+    if (!file.type.startsWith('image/')) {
+      showError('画像ファイルを選択してください。');
+      this.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewImg.src = e.target.result;
+      imagePreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+    fileUploadArea.querySelector('.file-upload-text').textContent = '✓ ' + file.name;
+    fileUploadArea.style.borderColor = 'rgba(180,164,140,0.4)';
+  }
+});
+
+fileUploadArea.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  fileUploadArea.style.borderColor = 'rgba(180,164,140,0.5)';
+  fileUploadArea.style.background = 'rgba(255,255,255,0.02)';
+});
+fileUploadArea.addEventListener('dragleave', () => {
+  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
+  fileUploadArea.style.background = 'transparent';
+});
+fileUploadArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
+  fileUploadArea.style.background = 'transparent';
+  if (e.dataTransfer.files.length) {
+    fileInput.files = e.dataTransfer.files;
+    fileInput.dispatchEvent(new Event('change'));
+  }
+});
+
+// Form submission
+const contestForm = document.getElementById('contestForm');
+const submitBtn = document.getElementById('submitBtn');
+const formSuccess = document.getElementById('formSuccess');
+const formError = document.getElementById('formError');
+
+contestForm.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  hideError();
+
+  const penname = document.getElementById('penname').value.trim();
+  const comment = document.getElementById('comment').value.trim();
+  const photo = fileInput.files[0];
+
+  if (!penname) { showError('ペンネームを入力してください。'); return; }
+  if (!photo) { showError('写真を選択してください。'); return; }
+  if (!comment) { showError('コメントを入力してください。'); return; }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = '送信中...';
+
+  try {
+    const formData = new FormData(contestForm);
+    const response = await fetch(contestForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      contestForm.style.display = 'none';
+      formSuccess.style.display = 'block';
+    } else {
+      const data = await response.json();
+      showError(data.errors ? data.errors.map(e => e.message).join(', ') : '送信に失敗しました。もう一度お試しください。');
+    }
+  } catch (err) {
+    showError('ネットワークエラーが発生しました。もう一度お試しください。');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '投稿する — Submit';
+  }
+});
+
+document.getElementById('submitAnother').addEventListener('click', () => {
+  contestForm.reset();
+  contestForm.style.display = 'block';
+  formSuccess.style.display = 'none';
+  imagePreview.style.display = 'none';
+  fileUploadArea.querySelector('.file-upload-text').textContent = 'クリックして画像を選択、またはドラッグ＆ドロップ';
+  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
+});
+
+function showError(msg) {
+  formError.textContent = msg;
+  formError.style.display = 'block';
+}
+function hideError() {
+  formError.style.display = 'none';
+}
+</script>
+
+</body>
+</html>
