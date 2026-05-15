@@ -459,62 +459,8 @@
     font-size: 0.95rem;
   }
 
-  .file-upload {
-    width: 100%;
-    padding: 2.5rem;
-    border: 1px dashed rgba(255,255,255,0.1);
-    border-radius: 3px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
-
-  .file-upload:hover {
-    border-color: var(--gold-dim);
-    background: rgba(255,255,255,0.015);
-  }
-
-  .file-upload-icon { font-size: 1.8rem; margin-bottom: 0.6rem; opacity: 0.5; }
-
-  .file-upload-text {
-    font-size: 0.95rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.05em;
-  }
-
-  .file-upload-hint {
-    font-size: 0.8rem;
-    color: rgba(138,125,106,0.5);
-    margin-top: 0.4rem;
-    font-style: italic;
-  }
-
-  .image-preview {
-    margin-top: 1rem;
-    text-align: center;
-    display: none;
-  }
-
-  .image-preview img {
-    max-width: 100%;
-    max-height: 250px;
-    border-radius: 3px;
-    border: 1px solid rgba(255,255,255,0.08);
-    object-fit: contain;
-  }
-
-  .image-preview .preview-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.75rem;
-    color: var(--gold-dim);
-    letter-spacing: 0.15em;
-    margin-top: 0.5rem;
-    text-transform: uppercase;
-  }
-
   .submit-btn {
-    width: 100%;
-    padding: 1.1rem;
+    padding: 1.1rem 3rem;
     background: linear-gradient(135deg, rgba(180,164,140,0.15), rgba(180,164,140,0.05));
     border: 1px solid rgba(180,164,140,0.25);
     border-radius: 2px;
@@ -524,69 +470,27 @@
     letter-spacing: 0.15em;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .submit-btn:hover {
     background: linear-gradient(135deg, rgba(180,164,140,0.25), rgba(180,164,140,0.1));
     border-color: rgba(180,164,140,0.45);
     box-shadow: 0 4px 20px rgba(180,164,140,0.1);
-  }
-
-  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .form-success {
-    display: none;
-    text-align: center;
-    padding: 3rem 2rem;
-  }
-
-  .form-success .success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-
-  .form-success .success-title {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 1.3rem;
     color: var(--cream);
-    margin-bottom: 0.8rem;
-    letter-spacing: 0.08em;
   }
 
-  .form-success .success-text {
-    font-size: 1rem;
-    color: var(--cream-soft);
-    line-height: 1.9;
-    font-weight: 300;
-  }
-
-  .form-success .submit-another {
-    margin-top: 1.5rem;
+  .form-container a.submit-btn {
     display: inline-block;
-    padding: 0.7rem 2rem;
-    background: none;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 2px;
-    color: var(--gold-mid);
-    font-family: 'Shippori Mincho', serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .form-success .submit-another:hover {
-    border-color: rgba(180,164,140,0.35);
-    color: var(--gold-bright);
-  }
-
-  .form-error {
-    display: none;
+    text-decoration: none;
     text-align: center;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid rgba(200,100,100,0.3);
-    border-radius: 3px;
-    background: rgba(200,100,100,0.05);
-    color: #d4a0a0;
-    font-size: 0.9rem;
+  }
+
+  .form-container a.submit-btn:hover {
+    background: linear-gradient(135deg, rgba(180,164,140,0.25), rgba(180,164,140,0.1));
+    border-color: rgba(180,164,140,0.45);
+    box-shadow: 0 4px 20px rgba(180,164,140,0.1);
   }
 
   /* ===== CTA ===== */
@@ -809,38 +713,25 @@
   <h2 class="section-title">作品を投稿する</h2>
   <div class="form-area">
     <div class="form-container">
-      <div class="form-error" id="formError"></div>
-
-      <form id="contestForm" action="https://formbold.com/s/9k2bP" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="penname">Pen Name — ペンネーム</label>
-          <input type="text" id="penname" name="penname" placeholder="あなたの名前、あるいは偽名" required>
+      <div style="text-align: center; padding: 2rem 0;">
+        <p style="font-size: 1.05rem; line-height: 2; color: var(--cream-soft); font-weight: 300; margin-bottom: 0.8rem;">
+          投稿フォームでは以下の3点をご記入いただきます。
+        </p>
+        <div style="text-align: left; max-width: 360px; margin: 0 auto 2rem; padding: 1.5rem 2rem; border: 1px solid rgba(255,255,255,0.06); border-radius: 3px; background: rgba(255,255,255,0.01);">
+          <p style="font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1rem;">Required</p>
+          <p style="font-size: 0.95rem; color: var(--cream-soft); line-height: 2.2; font-weight: 300;">
+            ① ペンネーム<br>
+            ② 朝食の写真（画像アップロード）<br>
+            ③ この一枚についてのコメント
+          </p>
         </div>
-        <div class="form-group">
-          <label>Photo — 写真</label>
-          <div class="file-upload" id="fileUploadArea">
-            <div class="file-upload-icon">📷</div>
-            <p class="file-upload-text">クリックして画像を選択、またはドラッグ＆ドロップ</p>
-            <p class="file-upload-hint">JPG / PNG / WEBP — 10MBまで</p>
-          </div>
-          <input type="file" id="fileInput" name="photo" accept="image/*" style="display:none" required>
-          <div class="image-preview" id="imagePreview">
-            <img id="previewImg" src="" alt="preview">
-            <p class="preview-label">Preview</p>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="comment">Comment — この一枚について</label>
-          <textarea id="comment" name="comment" placeholder="なぜこれが「あなたの優雅な朝食」なのか、教えてください" required></textarea>
-        </div>
-        <button type="submit" class="submit-btn" id="submitBtn">投稿する — Submit</button>
-      </form>
-
-      <div class="form-success" id="formSuccess">
-        <div class="success-icon">✨</div>
-        <p class="success-title">投稿を受け付けました</p>
-        <p class="success-text">あなたの「優雅な朝食」は、主催者の確認後にギャラリーに掲載されます。<br>結果発表は 5月29日 21:00 の配信にて。</p>
-        <button class="submit-another" id="submitAnother">もう一枚投稿する</button>
+        <p style="font-size: 0.85rem; color: var(--gold-dim); font-style: italic; margin-bottom: 2rem;">
+          ※ Googleアカウントへのログインが必要です<br>
+          ※ メールアドレスは収集しません
+        </p>
+        <a href="https://forms.gle/FF5aixaNr7gSg3KP9" target="_blank" rel="noopener noreferrer" class="submit-btn" style="display: inline-block; text-decoration: none; padding: 1.1rem 3rem;">
+          投稿フォームを開く — Open Form
+        </a>
       </div>
     </div>
   </div>
@@ -870,123 +761,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
 document.querySelectorAll('.section').forEach(s => observer.observe(s));
-
-// File upload
-const fileInput = document.getElementById('fileInput');
-const fileUploadArea = document.getElementById('fileUploadArea');
-const imagePreview = document.getElementById('imagePreview');
-const previewImg = document.getElementById('previewImg');
-
-fileUploadArea.addEventListener('click', () => fileInput.click());
-
-fileInput.addEventListener('change', function() {
-  if (this.files && this.files[0]) {
-    const file = this.files[0];
-    if (file.size > 10 * 1024 * 1024) {
-      showError('ファイルサイズは10MB以下にしてください。');
-      this.value = '';
-      return;
-    }
-    if (!file.type.startsWith('image/')) {
-      showError('画像ファイルを選択してください。');
-      this.value = '';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      previewImg.src = e.target.result;
-      imagePreview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-    fileUploadArea.querySelector('.file-upload-text').textContent = '✓ ' + file.name;
-    fileUploadArea.style.borderColor = 'rgba(180,164,140,0.4)';
-  }
-});
-
-fileUploadArea.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  fileUploadArea.style.borderColor = 'rgba(180,164,140,0.5)';
-  fileUploadArea.style.background = 'rgba(255,255,255,0.02)';
-});
-fileUploadArea.addEventListener('dragleave', () => {
-  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
-  fileUploadArea.style.background = 'transparent';
-});
-fileUploadArea.addEventListener('drop', (e) => {
-  e.preventDefault();
-  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
-  fileUploadArea.style.background = 'transparent';
-  if (e.dataTransfer.files.length) {
-    fileInput.files = e.dataTransfer.files;
-    fileInput.dispatchEvent(new Event('change'));
-  }
-});
-
-// Form submission
-const contestForm = document.getElementById('contestForm');
-const submitBtn = document.getElementById('submitBtn');
-const formSuccess = document.getElementById('formSuccess');
-const formError = document.getElementById('formError');
-
-contestForm.addEventListener('submit', async function(e) {
-  e.preventDefault();
-  hideError();
-
-  const penname = document.getElementById('penname').value.trim();
-  const comment = document.getElementById('comment').value.trim();
-  const photo = fileInput.files[0];
-
-  if (!penname) { showError('ペンネームを入力してください。'); return; }
-  if (!photo) { showError('写真を選択してください。'); return; }
-  if (!comment) { showError('コメントを入力してください。'); return; }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = '送信中...';
-
-  try {
-    const formData = new FormData(contestForm);
-    const response = await fetch(contestForm.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-
-    if (response.ok || response.status === 201) {
-      contestForm.style.display = 'none';
-      formSuccess.style.display = 'block';
-    } else {
-      let msg = '送信に失敗しました。もう一度お試しください。';
-      try {
-        const data = await response.json();
-        if (data.message) msg = data.message;
-        else if (data.errors) msg = Array.isArray(data.errors) ? data.errors.map(e => e.message || e).join(', ') : data.errors;
-      } catch(e) {}
-      showError(msg);
-    }
-  } catch (err) {
-    showError('ネットワークエラーが発生しました。もう一度お試しください。');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = '投稿する — Submit';
-  }
-});
-
-document.getElementById('submitAnother').addEventListener('click', () => {
-  contestForm.reset();
-  contestForm.style.display = 'block';
-  formSuccess.style.display = 'none';
-  imagePreview.style.display = 'none';
-  fileUploadArea.querySelector('.file-upload-text').textContent = 'クリックして画像を選択、またはドラッグ＆ドロップ';
-  fileUploadArea.style.borderColor = 'rgba(255,255,255,0.1)';
-});
-
-function showError(msg) {
-  formError.textContent = msg;
-  formError.style.display = 'block';
-}
-function hideError() {
-  formError.style.display = 'none';
-}
 </script>
 
 </body>
