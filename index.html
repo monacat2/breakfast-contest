@@ -811,7 +811,7 @@
     <div class="form-container">
       <div class="form-error" id="formError"></div>
 
-      <form id="contestForm" action="https://formspree.io/f/xwvygerp" method="POST" enctype="multipart/form-data">
+      <form id="contestForm" action="https://formbold.com/s/9k2bP" method="POST" enctype="multipart/form-data">
         <div class="form-group">
           <label for="penname">Pen Name — ペンネーム</label>
           <input type="text" id="penname" name="penname" placeholder="あなたの名前、あるいは偽名" required>
@@ -951,12 +951,17 @@ contestForm.addEventListener('submit', async function(e) {
       headers: { 'Accept': 'application/json' }
     });
 
-    if (response.ok) {
+    if (response.ok || response.status === 201) {
       contestForm.style.display = 'none';
       formSuccess.style.display = 'block';
     } else {
-      const data = await response.json();
-      showError(data.errors ? data.errors.map(e => e.message).join(', ') : '送信に失敗しました。もう一度お試しください。');
+      let msg = '送信に失敗しました。もう一度お試しください。';
+      try {
+        const data = await response.json();
+        if (data.message) msg = data.message;
+        else if (data.errors) msg = Array.isArray(data.errors) ? data.errors.map(e => e.message || e).join(', ') : data.errors;
+      } catch(e) {}
+      showError(msg);
     }
   } catch (err) {
     showError('ネットワークエラーが発生しました。もう一度お試しください。');
